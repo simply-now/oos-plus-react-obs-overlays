@@ -7,6 +7,7 @@ Create React App with the template
 ```shell
 yarn start
 ```
+This will run scripts and setup a local Development environment that can be used with OBS by opening up browser, custom, or page targeted resources for overlay use. Feel free to use this code in other ways.
 
 See `package.json` for Scripts
 [`package.json`](package.json)
@@ -37,9 +38,15 @@ See `package.json` for Scripts
 
 ## Current Features
 
+- Simple Magic the Gathering Card Search and Overlay using the Scryfall API is the current only working feature.
 ---
 
 ## Planed Features
+
+- Plugin style components that show the overlays from different types of data sources
+- Host and hotswappable data both for local API's and remote Ones
+- Connect and links ready for other data sources and remote controls
+- OBS and maybe other streaming app integration with an Actual plugin
 
 ---
 
