@@ -9,8 +9,8 @@ export function NavBar() {
   return (
     <Wrapper>
       <PageWrapper>
-        <Logo />
-        <Nav />
+        {/* <Logo />
+        <Nav /> */}
       </PageWrapper>
     </Wrapper>
   );

@@ -11,13 +11,12 @@ export function HomePage() {
       <Helmet>
         <title>Home Page</title>
         <meta
-          name="description"
-          content="A React Boilerplate application homepage"
+          name="OOS: Scryfall API Page Test"
+          content="A Homepage Scryfall API Page Test"
         />
       </Helmet>
       <NavBar />
       <PageWrapper>
-        <Masthead />
         <Features />
       </PageWrapper>
     </>

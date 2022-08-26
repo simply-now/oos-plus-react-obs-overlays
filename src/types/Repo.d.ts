@@ -81,3 +81,10 @@ export interface Repo extends ReposListForksResponseItem {
   open_issues: number;
   watchers: number;
 }
+
+export interface card {
+  name: string;
+  img: string;
+  card_faces: Array<string>;
+  rulings_uri: string;
+}
