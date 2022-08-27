@@ -324,40 +324,40 @@ export function ScryfallCardForm() {
                 {card.card_faces?.length === 1 ? (
                   <CardImageContainer>
                     {card.card_faces.map((obj, index) => (
-                      <div key={index}>
+                      <CardImages key={index}>
                         {' '}
                         <CardImage
                           onClick={onClick}
                           src={obj}
                           alt={card.name}
                         />{' '}
-                      </div>
+                      </CardImages>
                     )) ?? null}
                   </CardImageContainer>
                 ) : card.card_faces?.length === 2 ? (
                   <CardImageContainer>
                     {card.card_faces.map((obj, index) => (
-                      <div key={index}>
+                      <CardImages key={index}>
                         {' '}
                         <CardImage
                           onClick={onClick}
                           src={obj}
                           alt={card.name}
                         />{' '}
-                      </div>
+                      </CardImages>
                     )) ?? null}
                   </CardImageContainer>
                 ) : card.card_faces?.length > 2 ? (
                   <CardImageContainer>
                     {card.card_faces.map((obj, index) => (
-                      <div key={index}>
+                      <CardImages key={index}>
                         {' '}
                         <CardImage
                           onClick={onClick}
                           src={obj}
                           alt={card.name}
                         />{' '}
-                      </div>
+                      </CardImages>
                     )) ?? null}
                   </CardImageContainer>
                 ) : error ? (
@@ -514,7 +514,7 @@ const Suggestion = styled.div`
 const List = styled.div`
   scroll-snap-type: y mandatory;
   scroll-snap-points-y: repeat(200vh);
-  scroll-padding-top: 50px;
+  scroll-padding-top: 10px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -524,12 +524,12 @@ const List = styled.div`
   top: 72px;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 10px;
 `;
 
 const CardElement = styled.div`
   scroll-snap-align: start;
-  margin-bottom: 50vh;
+  margin-bottom: 30vh;
   height: 80vh;
   width: 80vw;
 `;
@@ -543,20 +543,25 @@ const CardImageRoot = styled.div`
 `;
 
 const CardImageContainer = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
+const CardImages = styled.div`
+  height: 100%
+`;
+
 const CardImage = styled.img`
-  margin: 50px 0px;
   height: 100%;
   width: 100%;
 `;
 
 const CardLowerDetails = styled.div`
   position: relative;
-  bottom: -7vh;
+  bottom: -4vh;
 `;
 
 const RuleElement = styled.div``;
