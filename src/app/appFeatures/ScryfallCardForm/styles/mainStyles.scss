@@ -1,0 +1,198 @@
+
+// --------------
+// Global styles
+// --------------
+
+*, *:after, *:before {
+  box-sizing: border-box
+}
+// Color Variables
+$l1: hsla(0, 0%, 100%, 1);
+$l2: hsla(223, 13%, 87%, 1);
+$l3: hsla(0, 0%, 77%, 1);
+$d1: hsla(0, 0%, 20%, 1);
+$d2: #555;
+$p1: #FFC324;
+$button-gradient-start: #5adaff;
+$button-gradient-end: #5468ff;
+$button-text-color: #fff;
+
+// Mixins
+@mixin size($x, $y) {
+  width: $x;
+  height: $y;
+}
+
+
+
+// --------------
+// Overall card
+// --------------
+
+.card-element {
+  .btn-list {
+    display: flex;
+    justify-content: space-around;
+    margin: 0px -20px;
+    justify-content: center;
+    text-align: center;
+    
+    .btn {
+      // positioning
+      align-items: center;
+      appearance: none;
+      background-image: radial-gradient(100% 100% at 100% 0, $button-gradient-start 0, $button-gradient-end 100%);
+      border: 0;
+      border-radius: 6px;
+      box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: "JetBrains Mono",monospace;
+      height: 48px;
+      justify-content: center;
+      line-height: 1;
+      list-style: none;
+      overflow: hidden;
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      text-align: left;
+      text-decoration: none;
+      transition: box-shadow .15s,transform .15s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      will-change: box-shadow,transform;
+      font-size: 18px;
+      margin: 5px;
+      &:active, &:active:hover {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        transform: translateY(2px);
+      }
+      &:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+      }
+      &:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        transform: translateY(-2px);
+        h4 {
+          transform: translateX(0px);
+        }
+        svg{
+          transform: translateX(0px);
+          opacity: 1;
+        }
+      }
+
+      h4 {
+        color: $button-text-color;
+        transform: translateX(12px);
+        transition: transform 0.3s ease-out;
+      } 
+      svg {
+        margin: 1px 0 0 4px;
+        transform: translateX(-8px);
+        opacity: 0;
+        transition: all 0.3s ease-out;
+      }
+    }
+  }
+}
+
+.cardContainer.inactive {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 4px;
+  perspective: 1000px;
+}
+// .active is applied to .card when .card is clicked.
+.active {
+  &:after{
+    display: none;
+  }
+}
+  
+  .card {
+    margin: 10px 0px;
+    display: inline-block;
+    @include size(100%, 100%);
+    cursor: pointer;
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transform: translateZ(0px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    justify-content: center;
+    // :after allows for a more performant box-shadow because only opacity is being animated.
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      @include size(100%, 100%);
+      border-radius: 5px;
+      box-shadow: 0 14px 50px -4px hsla(0, 0%, 0%, 0.15);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1.4);
+    }
+    &:hover {
+      transform: translateZ(-10px);
+      margin: 20px 0px;
+    }
+    &:hover:after {
+      opacity: 1;
+    }
+
+    &.active {
+      transform: translateZ(0px) rotateY(180deg);
+      margin: 10px 0px;
+    }
+      
+    &.active:hover {
+      margin: 20px 0px;
+      transform: translateZ(-10px) rotateY(180deg);
+    }
+    
+    .card-side {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      position: absolute;
+      width: auto;
+      height: auto;
+      max-height: 100%;
+    }
+
+    .card-front {
+      z-index: 2;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .info {
+      padding: 16px;
+    }
+  }
+// --------------
+// Front of card
+// --------------
+
+.card-front {
+
+  .img {
+    @include size(100%, 250px);
+  }
+}
+
+
+// --------------
+// Back of card
+// --------------
+
+.card-back {
+  position: relative;
+}

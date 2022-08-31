@@ -102,7 +102,7 @@ export function ScryfallCardForm() {
     value: varScryfallCard,
     autoFocus: true,
     pattern: '[sS]*S[sS]*',
-    minlength: '1',
+    minLength: '1',
     onChange: autoSuggestOnChange,
     onKeyDown: autoSuggestOnSubmit,
   };
@@ -193,10 +193,25 @@ export function ScryfallCardForm() {
     const card = await Scry.Cards.byName(cardName);
     let rulings = [] as Scry.Ruling[];
     rulings = await card.getRulings();
+    setStringRulings([]);
     setScryRulings(rulings);
     console.log(rulings);
-    console.log('stringRulings:');
-    return rulings;
+    rulings.map((ruling, index) => {
+      console.log('Rule' + index + ':' + ruling.published_at);
+      console.log('Rule' + index + ':' + ruling.comment);
+      stringRulings.push(
+        'Rule' +
+          index +
+          ':' +
+          'Date' +
+          ruling.published_at +
+          ': ' +
+          ruling.comment,
+      );
+      return scryRulings;
+    });
+    console.log('stringRulings:' + stringRulings);
+    return scryRulings;
   };
 
   const setRulingModal = (value: boolean) => setRulingModalDisplay(value);
@@ -239,6 +254,18 @@ export function ScryfallCardForm() {
     // }
     setRandomCard();
   });
+
+  const rotateElement: React.MouseEventHandler<HTMLElement> = e => {
+    if (e.currentTarget.style.transform !== 'rotate(' + 90 + 'deg)') {
+      e.currentTarget.style.transform = 'rotate(' + 90 + 'deg)';
+    } else {
+      e.currentTarget.style.transform = 'rotate(' + 0 + 'deg)';
+    }
+    const inputElements = document.getElementsByTagName('input');
+    const inputElement = inputElements[0];
+    inputElement.focus();
+    inputElement.select();
+  };
 
   const onClick: React.MouseEventHandler<HTMLElement> = e => {
     if (e.currentTarget.style.transform !== 'rotate(' + 90 + 'deg)') {
@@ -319,44 +346,71 @@ export function ScryfallCardForm() {
       {scryfallCardMaps?.length > 0 ? (
         <List>
           {scryfallCardMaps.map(card => (
-            <CardElement style={{ color: 'white' }} key={card.name}>
+            <CardElement
+              className="card-element"
+              style={{ color: 'white' }}
+              key={card.name + 'name'}
+            >
+              <CardBtnlist className="btn-list">
+                <CardBtn
+                  onClick={function () {
+                    getSingleCardRules(card.name);
+                    setRulingModal(true);
+                  }}
+                  className="btn"
+                >
+                  <CardBtnTitle>Rules</CardBtnTitle>
+                  <CardBtnSVG
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />
+                    <path d="M0-.25h24v24H0z" fill="none" />
+                  </CardBtnSVG>
+                </CardBtn>
+              </CardBtnlist>
               <CardImageRoot>
                 {card.card_faces?.length === 1 ? (
-                  <CardImageContainer>
+                  <CardImageContainer onClick={rotateElement}>
                     {card.card_faces.map((obj, index) => (
-                      <CardImages key={index}>
-                        {' '}
-                        <CardImage
-                          onClick={onClick}
-                          src={obj}
-                          alt={card.name}
-                        />{' '}
-                      </CardImages>
+                      <CardImage
+                        key={card.name + 'cardImage'}
+                        src={obj}
+                        alt={card.name}
+                      />
                     )) ?? null}
                   </CardImageContainer>
                 ) : card.card_faces?.length === 2 ? (
-                  <CardImageContainer>
-                    {card.card_faces.map((obj, index) => (
-                      <CardImages key={index}>
-                        {' '}
-                        <CardImage
-                          onClick={onClick}
-                          src={obj}
-                          alt={card.name}
-                        />{' '}
-                      </CardImages>
-                    )) ?? null}
+                  <CardImageContainer
+                    onClick={rotateElement}
+                    className="cardContainer inactive"
+                  >
+                    <CardImages
+                      key={card.name + 'cardImagesBackFront'}
+                      className="card"
+                    >
+                      <CardImage
+                        key={card.name + 'cardImage-front'}
+                        src={card.card_faces[0]}
+                        alt={card.name + '-front'}
+                        className="card-side card-front"
+                      />
+                      <CardImage
+                        key={card.name + 'cardImage-back'}
+                        src={card.card_faces[1]}
+                        alt={card.name + '-back'}
+                        className="card-side card-back"
+                      />
+                    </CardImages>
                   </CardImageContainer>
                 ) : card.card_faces?.length > 2 ? (
                   <CardImageContainer>
                     {card.card_faces.map((obj, index) => (
-                      <CardImages key={index}>
-                        {' '}
-                        <CardImage
-                          onClick={onClick}
-                          src={obj}
-                          alt={card.name}
-                        />{' '}
+                      <CardImages key={card.name + 'cardImage:' + index}>
+                        <CardImage src={obj} alt={card.name} />
                       </CardImages>
                     )) ?? null}
                   </CardImageContainer>
@@ -535,8 +589,8 @@ const CardElement = styled.div`
 `;
 
 const CardImageRoot = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 80vh;
+  width: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -544,14 +598,14 @@ const CardImageRoot = styled.div`
 
 const CardImageContainer = styled.div`
   height: 100%;
-  width: 100%;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const CardImages = styled.div`
-  height: 100%
+  height: 100%;
 `;
 
 const CardImage = styled.img`
@@ -565,3 +619,11 @@ const CardLowerDetails = styled.div`
 `;
 
 const RuleElement = styled.div``;
+
+const CardBtnlist = styled.div``;
+
+const CardBtn = styled.div``;
+
+const CardBtnTitle = styled.h4``;
+
+const CardBtnSVG = styled.svg``;
