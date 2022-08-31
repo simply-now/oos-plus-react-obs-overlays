@@ -30,7 +30,7 @@ $button-text-color: #fff;
 // --------------
 
 .card-element {
-  .btn-list {
+  .btn-list, .single-btn {
     display: flex;
     justify-content: space-around;
     margin: 0px -20px;
