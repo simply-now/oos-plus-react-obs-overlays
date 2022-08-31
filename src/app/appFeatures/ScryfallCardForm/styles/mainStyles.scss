@@ -140,7 +140,6 @@ $button-text-color: #fff;
       transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1.4);
     }
     &:hover {
-      transform: translateZ(-10px);
       margin: 20px 0px;
     }
     &:hover:after {
@@ -154,7 +153,7 @@ $button-text-color: #fff;
       
     &.active:hover {
       margin: 20px 0px;
-      transform: translateZ(-10px) rotateY(180deg);
+      transform: translateZ(0px) rotateY(180deg);
     }
     
     .card-side {
