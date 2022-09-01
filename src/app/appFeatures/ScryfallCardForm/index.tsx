@@ -646,7 +646,7 @@ const CardImage = styled.img`
 
 const CardLowerDetails = styled.div`
   position: relative;
-  bottom: -4vh;
+  bottom: -2vh;
 `;
 
 const RuleElement = styled.div``;
