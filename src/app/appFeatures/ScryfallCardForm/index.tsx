@@ -352,7 +352,7 @@ export function ScryfallCardForm() {
       ) : null}
       {scryfallCardMaps?.length > 0 ? (
         <List>
-          {scryfallCardMaps.map(card => (
+          {scryfallCardMaps.map((card, index) => (
             <CardElement
               className="card-element"
               style={{ color: 'white' }}
@@ -378,10 +378,32 @@ export function ScryfallCardForm() {
                     <path d="M0-.25h24v24H0z" fill="none" />
                   </CardBtnSVG>
                 </CardBtn>
+                <CardBtn
+                  onClick={function () {
+                    getSingleCardRules(card.name);
+                    setRulingModal(true);
+                  }}
+                  className="btn"
+                >
+                  <CardBtnTitle>Rules</CardBtnTitle>
+                  <CardBtnSVG
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />
+                    <path d="M0-.25h24v24H0z" fill="none" />
+                  </CardBtnSVG>
+                </CardBtn>
               </CardBtnlist>
-              <CardImageRoot>
+              <CardImageRoot
+                id={'cardimgroot-card-' + index}
+                onClick={rotateElement}
+              >
                 {card.card_faces?.length === 1 ? (
-                  <CardImageContainer onClick={rotateElement}>
+                  <CardImageContainer>
                     {card.card_faces.map((obj, index) => (
                       <CardImage
                         key={card.name + 'cardImage'}
@@ -391,10 +413,7 @@ export function ScryfallCardForm() {
                     )) ?? null}
                   </CardImageContainer>
                 ) : card.card_faces?.length === 2 ? (
-                  <CardImageContainer
-                    onClick={rotateElement}
-                    className="cardContainer"
-                  >
+                  <CardImageContainer className="cardContainer">
                     <CardImages
                       key={card.name + 'cardImagesBackFront'}
                       className="card"
@@ -426,14 +445,33 @@ export function ScryfallCardForm() {
                   <ErrorText>{repoErrorText(error)}</ErrorText>
                 ) : null}
               </CardImageRoot>
-              {card.card_faces?.length === 2 ? (
-                <SingleBtn
+              <CardBtnlist className="btn-list">
+                <CardBtn
                   onClick={function () {
-                    flipCard('cardImagesBackFront' + card.name);
+                    getSingleCardRules(card.name);
+                    setRulingModal(true);
                   }}
-                  className="single-btn"
+                  className="btn"
                 >
-                  <CardBtn className="btn">
+                  <CardBtnTitle>Rules</CardBtnTitle>
+                  <CardBtnSVG
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />
+                    <path d="M0-.25h24v24H0z" fill="none" />
+                  </CardBtnSVG>
+                </CardBtn>
+                {card.card_faces?.length === 2 ? (
+                  <CardBtn
+                    onClick={function () {
+                      flipCard('cardImagesBackFront' + card.name);
+                    }}
+                    className="btn"
+                  >
                     <CardBtnTitle>Flip</CardBtnTitle>
                     <CardBtnSVG
                       fill="currentColor"
@@ -445,10 +483,29 @@ export function ScryfallCardForm() {
                       <path d="M449.9 39.96l-48.5 48.53C362.5 53.19 311.4 32 256 32C161.5 32 78.59 92.34 49.58 182.2c-5.438 16.81 3.797 34.88 20.61 40.28c16.97 5.5 34.86-3.812 40.3-20.59C130.9 138.5 189.4 96 256 96c37.96 0 73 14.18 100.2 37.8L311.1 178C295.1 194.8 306.8 223.4 330.4 224h146.9C487.7 223.7 496 215.3 496 204.9V59.04C496 34.99 466.9 22.95 449.9 39.96zM441.8 289.6c-16.94-5.438-34.88 3.812-40.3 20.59C381.1 373.5 322.6 416 256 416c-37.96 0-73-14.18-100.2-37.8L200 334C216.9 317.2 205.2 288.6 181.6 288H34.66C24.32 288.3 16 296.7 16 307.1v145.9c0 24.04 29.07 36.08 46.07 19.07l48.5-48.53C149.5 458.8 200.6 480 255.1 480c94.45 0 177.4-60.34 206.4-150.2C467.9 313 458.6 294.1 441.8 289.6z"></path>
                     </CardBtnSVG>
                   </CardBtn>
-                </SingleBtn>
-              ) : error ? (
-                <ErrorText>{repoErrorText(error)}</ErrorText>
-              ) : null}
+                ) : error ? (
+                  <ErrorText>{repoErrorText(error)}</ErrorText>
+                ) : null}
+                <CardBtn
+                  onClick={function () {
+                    getSingleCardRules(card.name);
+                    setRulingModal(true);
+                  }}
+                  className="btn"
+                >
+                  <CardBtnTitle>Rules</CardBtnTitle>
+                  <CardBtnSVG
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />
+                    <path d="M0-.25h24v24H0z" fill="none" />
+                  </CardBtnSVG>
+                </CardBtn>
+              </CardBtnlist>
               <CardLowerDetails>
                 Name: {card.name}
                 <br></br>
@@ -614,17 +671,21 @@ const List = styled.div`
 
 const CardElement = styled.div`
   scroll-snap-align: start;
-  margin-bottom: 30vh;
-  height: 80vh;
-  width: 80vw;
+  margin: 15vh auto;
+  height: 100vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CardImageRoot = styled.div`
-  height: 80vh;
-  width: 80vw;
+  height: 70vh;
+  width: 70vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0px auto;
 `;
 
 const CardImageContainer = styled.div`
@@ -640,13 +701,14 @@ const CardImages = styled.div`
 `;
 
 const CardImage = styled.img`
-  height: 100%;
-  width: 100%;
+  max-height: 70vh;
+  max-width: 70vw;
+  aspect-ratio: 3 / 4;
 `;
 
 const CardLowerDetails = styled.div`
   position: relative;
-  bottom: -2vh;
+  bottom: 2vh;
 `;
 
 const RuleElement = styled.div``;
